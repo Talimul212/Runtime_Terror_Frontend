@@ -9,7 +9,7 @@ async function connectToDatabase() {
   if (isConnected) return;
   try {
     await mongoose.connect(config.database_url);
-    console.log("🛢 Database is connected successfully");
+    console.log("Database is connected successfully");
     isConnected = true;
   } catch (err) {
     console.error("Failed to connect database", err);
@@ -27,7 +27,7 @@ if (process.env.NODE_ENV !== "production") {
   (async () => {
     await connectToDatabase();
     server = app.listen(config.port, () => {
-      console.log(`🚀 Application listening on port ${config.port}`);
+      console.log(`Application listening on port ${config.port}`);
     });
   })();
 }
