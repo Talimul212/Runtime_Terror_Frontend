@@ -18,13 +18,13 @@ import logo from "../../assets/logocrop.png";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../redux/features/auth/authSlice";
-
+import { ArrowRightOnRectangleIcon } from "@heroicons/react/24/outline";
 const navigation = [
   { name: "Home", href: "/", current: true },
   { name: "Jobs", href: "/jobs", current: false },
   { name: "Resources", href: "/resources", current: false },
-  { name: "Profile", href: "/profile", current: false },
-  { name: "Register", href: "/register", current: false },
+  { name: "How FlexJobs Works", href: "/about", current: false },
+  { name: "Job Search Articles", href: "/blog", current: false },
 ];
 
 function classNames(...classes) {
@@ -68,7 +68,7 @@ const Navbar = () => {
               />
             </div>
             <div className="hidden sm:ml-6 sm:block">
-              <div className="flex space-x-4">
+              <div className="flex space-x-4 uppercase">
                 {navigation.map((item) => {
                   const isActive = location.pathname === item.href;
                   return (
@@ -139,13 +139,22 @@ const Navbar = () => {
                 </MenuItems>
               </Menu>
             ) : (
-              <a
-                href="/signup"
-                className="ml-4 inline-flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition"
-              >
-                <UserPlusIcon className="h-5 w-5" />
-                Sign Up
-              </a>
+              <>
+                <a
+                  href="/register"
+                  className="ml-4 inline-flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition"
+                >
+                  <UserPlusIcon className="h-5 w-5" />
+                  Sign Up
+                </a>
+                <a
+                  href="/login"
+                  className="ml-4 inline-flex items-center gap-1 rounded-md bg-indigo-600 px-3 py-2 text-sm font-medium text-white hover:bg-indigo-700 transition"
+                >
+                  <ArrowRightOnRectangleIcon className="h-5 w-5" />
+                  Login
+                </a>
+              </>
             )}
           </div>
         </div>

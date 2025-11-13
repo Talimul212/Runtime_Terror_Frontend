@@ -19,7 +19,11 @@ const menuItems = [
     path: "/profile/certificates",
     icon: AcademicCapIcon,
   },
-  { name: "Liked Jobs", path: "/profile/likes", icon: HeartIcon },
+  {
+    name: "Career Interests",
+    path: "/profile/career-interests",
+    icon: HeartIcon,
+  },
 ];
 
 const ProfileLayout = () => {
