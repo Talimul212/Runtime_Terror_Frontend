@@ -4,7 +4,7 @@ import { BsInstagram, BsLinkedin, BsTwitter } from "react-icons/bs";
 
 const Footer = () => {
   return (
-    <footer className="bg-white dark:bg-slate-900 shadow-md rounded-xl w-full p-6 md:p-9">
+    <footer className="bg-white border-t border-indigo-100  dark:bg-slate-900 shadow-md rounded-xl w-full p-6 md:p-9">
       <div className="flex justify-between gap-[30px] flex-wrap w-full">
         {/* About Section */}
         <div>
