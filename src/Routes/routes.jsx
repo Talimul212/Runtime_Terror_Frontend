@@ -11,9 +11,12 @@ import Profile from "../Pages/Porfile/Profile";
 import Settings from "../Pages/Porfile/Settings";
 import Skills from "../Pages/Porfile/Skills";
 import Experience from "../Pages/Porfile/Experience";
-import Certificates from "../Pages/Porfile/Certificates";
 import SignUp from "../Pages/Auth/SignUp";
 import Login from "../Pages/Auth/Login";
+import PrivateRoute from "./PrivateRoute";
+import CareerInterests from "../Pages/Porfile/CareerInterests";
+import About from "../Pages/About/About";
+import Blog from "../Pages/Blog/Blog";
 
 export const router = createBrowserRouter([
   {
@@ -33,6 +36,14 @@ export const router = createBrowserRouter([
         element: <AllResource />,
       },
       {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
+      },
+      {
         path: "/register",
         element: <SignUp />,
       },
@@ -42,13 +53,17 @@ export const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <ProfileLayout />,
+        element: (
+          <PrivateRoute>
+            <ProfileLayout />,
+          </PrivateRoute>
+        ),
         children: [
           { index: true, element: <Profile /> },
           { path: "settings", element: <Settings /> },
           { path: "skills", element: <Skills /> },
           { path: "experience", element: <Experience /> },
-          { path: "certificates", element: <Certificates /> },
+          { path: "career-interests", element: <CareerInterests /> },
         ],
       },
     ],

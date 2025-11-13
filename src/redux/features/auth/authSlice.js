@@ -100,6 +100,32 @@ const authSlice = createSlice({
       });
   },
 });
+export const updateUserProfile = createAsyncThunk(
+  "auth/updateUserProfile",
+  async ({ userId, updatedFields }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
 
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/v1/auth/profile/${userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedFields),
+        }
+      );
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Profile update failed");
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 export const { logout } = authSlice.actions;
 export default authSlice.reducer;

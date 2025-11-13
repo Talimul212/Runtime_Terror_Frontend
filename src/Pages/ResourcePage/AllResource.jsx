@@ -1,53 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchResources } from "../../redux/features/resources/resourcesSlice.js";
 import ResourceCard from "../../Components/Card/ResourceCard";
 
 const resourceTypes = ["Course", "Video", "Article", "Workshop"];
 const categories = ["Frontend", "Backend", "Design", "Marketing", "AI/ML"];
 
-const resources = [
-  {
-    title: "React for Beginners",
-    description: "Learn the fundamentals of React with hands-on projects.",
-    tags: ["React", "JavaScript", "Frontend"],
-    type: "Course",
-    category: "Frontend",
-    provider: "SkillMatch Academy",
-    updatedAt: "2025-11-12T10:00:00Z",
-  },
-  {
-    title: "Intro to Machine Learning",
-    description: "Understand ML concepts and build your first model.",
-    tags: ["Python", "ML", "AI"],
-    type: "Video",
-    category: "AI/ML",
-    provider: "BrightAI Labs",
-    updatedAt: "2025-11-10T08:30:00Z",
-  },
-  {
-    title: "Design Thinking Workshop",
-    description: "Master user-centric design through interactive sessions.",
-    tags: ["UX", "Design", "Prototyping"],
-    type: "Workshop",
-    category: "Design",
-    provider: "DesignHive",
-    updatedAt: "2025-11-09T14:45:00Z",
-  },
-];
-
 const AllResources = () => {
+  const dispatch = useDispatch();
+  const { resources, loading, error } = useSelector((state) => state.resources);
+
   const [selectedType, setSelectedType] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
+  useEffect(() => {
+    dispatch(fetchResources());
+  }, [dispatch]);
+
   const filteredResources = resources.filter((res) => {
-    const matchType = selectedType ? res.type === selectedType : true;
+    const matchType = selectedType
+      ? res.type?.toLowerCase() === selectedType.toLowerCase()
+      : true;
     const matchCategory = selectedCategory
-      ? res.category === selectedCategory
+      ? res.category?.toLowerCase() === selectedCategory.toLowerCase()
       : true;
     return matchType && matchCategory;
   });
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900 text-gray-800 dark:text-white">
+      {/* Hero Section */}
       <section
         className="relative text-white py-12 px-6 md:px-16 overflow-hidden"
         style={{
@@ -58,12 +40,8 @@ const AllResources = () => {
           backgroundRepeat: "no-repeat",
         }}
       >
-        {/* Overlay for opacity */}
         <div className="absolute inset-0 bg-indigo-900/70 z-0"></div>
-
-        {/* Content */}
         <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 items-center gap-10">
-          {/* Left: Text Content */}
           <div>
             <h1 className="text-4xl font-bold mb-4">
               Level Up with SkillMatch Resources
@@ -79,8 +57,6 @@ const AllResources = () => {
               Browse Resources
             </a>
           </div>
-
-          {/* Right: Image */}
           <div className="flex justify-center md:justify-end">
             <img
               src="https://png.pngtree.com/png-vector/20240918/ourmid/pngtree-job-searching-3d-illustrations-png-image_13869121.png"
@@ -91,7 +67,7 @@ const AllResources = () => {
         </div>
       </section>
 
-      {/* 🎯 Filter + Cards */}
+      {/* Filter + Cards */}
       <section className="py-10 px-6 md:px-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Filters */}
@@ -114,7 +90,7 @@ const AllResources = () => {
               </select>
             </div>
 
-            <div>
+            <div className="mb-6">
               <label className="block mb-2 font-semibold">Category</label>
               <select
                 value={selectedCategory}
@@ -129,23 +105,41 @@ const AllResources = () => {
                 ))}
               </select>
             </div>
+
+            <button
+              onClick={() => {
+                setSelectedType("");
+                setSelectedCategory("");
+              }}
+              className="text-sm text-indigo-600 hover:underline"
+            >
+              Clear Filters
+            </button>
           </div>
 
           {/* Cards */}
           <div className="md:col-span-3">
             <h2 className="text-xl font-bold mb-4">Learning Resources</h2>
 
-            <div className="grid gap-6">
-              {filteredResources.length > 0 ? (
-                filteredResources.map((res, index) => (
+            {loading ? (
+              <p className="text-center text-gray-500 dark:text-slate-400">
+                Loading resources...
+              </p>
+            ) : error ? (
+              <p className="text-center text-red-500 dark:text-red-400">
+                Error: {error}
+              </p>
+            ) : filteredResources.length > 0 ? (
+              <div className="grid gap-6">
+                {filteredResources.map((res, index) => (
                   <ResourceCard key={index} resource={res} />
-                ))
-              ) : (
-                <p className="text-center text-gray-500 dark:text-slate-400">
-                  No resources found for the selected filters.
-                </p>
-              )}
-            </div>
+                ))}
+              </div>
+            ) : (
+              <p className="text-center text-gray-500 dark:text-slate-400">
+                No resources found for the selected filters.
+              </p>
+            )}
           </div>
         </div>
       </section>
