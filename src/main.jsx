@@ -5,9 +5,13 @@ import { RouterProvider } from "react-router-dom";
 import App from "./App.jsx";
 import MainLayOut from "./Layout/MainLayOut.jsx";
 import { router } from "./Routes/routes.jsx";
+import { Provider } from "react-redux";
+import { store } from "./redux/store.js";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <Provider store={store}>
+      <RouterProvider router={router}></RouterProvider>
+    </Provider>
   </StrictMode>
 );

@@ -12,6 +12,8 @@ import Settings from "../Pages/Porfile/Settings";
 import Skills from "../Pages/Porfile/Skills";
 import Experience from "../Pages/Porfile/Experience";
 import Certificates from "../Pages/Porfile/Certificates";
+import SignUp from "../Pages/Auth/SignUp";
+import Login from "../Pages/Auth/Login";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +31,14 @@ export const router = createBrowserRouter([
       {
         path: "/resources",
         element: <AllResource />,
+      },
+      {
+        path: "/register",
+        element: <SignUp />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/profile",
