@@ -9,9 +9,9 @@ import {
   MenuItems,
 } from "@headlessui/react";
 import { Bars3Icon, BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-
+import logo from "../../assets/logocrop.png";
 const navigation = [
-  { name: "Dashboard", href: "/", current: true },
+  { name: "Home", href: "/", current: true },
   { name: "Jobs", href: "/jobs", current: false },
   { name: "Resources", href: "/resources", current: false },
   { name: "Profile", href: "/profile", current: false },
@@ -21,9 +21,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
+import { useLocation } from "react-router-dom";
 const Navbar = () => {
+  const location = useLocation();
   return (
-    <Disclosure as="nav" className="relative bg-gray-800">
+    <Disclosure as="nav" className=" border-b border-indigo-100   sticky">
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           {/* Mobile menu button */}
@@ -40,27 +42,30 @@ const Navbar = () => {
             <div className="flex shrink-0 items-center">
               <img
                 alt="SkillMatch"
-                src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                className="h-8 w-auto"
+                src={logo}
+                className="h-8 w-auto rounded-full"
               />
             </div>
             <div className="hidden sm:ml-6 sm:block">
               <div className="flex space-x-4">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    aria-current={item.current ? "page" : undefined}
-                    className={classNames(
-                      item.current
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-300 hover:bg-white/5 hover:text-white",
-                      "rounded-md px-3 py-2 text-sm font-medium"
-                    )}
-                  >
-                    {item.name}
-                  </a>
-                ))}
+                {navigation.map((item) => {
+                  const isActive = location.pathname === item.href;
+                  return (
+                    <a
+                      key={item.name}
+                      href={item.href}
+                      aria-current={isActive ? "page" : undefined}
+                      className={classNames(
+                        isActive
+                          ? "border-b border-indigo-600 text-indigo-600"
+                          : "text-black hover:text-indigo-600",
+                        "px-3 py-2 text-sm font-medium"
+                      )}
+                    >
+                      {item.name}
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
