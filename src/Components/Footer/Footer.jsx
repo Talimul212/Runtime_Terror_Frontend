@@ -11,7 +11,7 @@ const Footer = () => {
           <h3 className="text-[1.2rem] dark:text-[#abc2d3] font-semibold text-[#424242] mb-2">
             About The Store
           </h3>
-          <div className="flex flex-col gap-[8px] text-black">
+          <div className="flex flex-col gap-2 text-black">
             {[
               "Home",
               "Become a customer",
