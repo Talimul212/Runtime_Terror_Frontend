@@ -25,7 +25,10 @@ import { useLocation } from "react-router-dom";
 const Navbar = () => {
   const location = useLocation();
   return (
-    <Disclosure as="nav" className=" border-b border-indigo-100   sticky">
+    <Disclosure
+      as="nav"
+      className="sticky top-0 z-50 bg-white dark:bg-slate-900 border-b border-indigo-100 backdrop-blur-md"
+    >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           {/* Mobile menu button */}
@@ -119,7 +122,6 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-
       {/* Mobile menu panel */}
       <DisclosurePanel className="sm:hidden">
         <div className="space-y-1 px-2 pt-2 pb-3">

@@ -4,6 +4,14 @@ import MainLayOut from "../Layout/MainLayOut";
 import Home from "../Pages/Home/Home/Home";
 import AllJobs from "../Pages/Jobpage/AllJobs";
 import AllResource from "../Pages/ResourcePage/AllResource";
+import ProfileLayout from "../Layout/ProfileLayout";
+
+// Profile Pages
+import Profile from "../Pages/Porfile/Profile";
+import Settings from "../Pages/Porfile/Settings";
+import Skills from "../Pages/Porfile/Skills";
+import Experience from "../Pages/Porfile/Experience";
+import Certificates from "../Pages/Porfile/Certificates";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +29,17 @@ export const router = createBrowserRouter([
       {
         path: "/resources",
         element: <AllResource />,
+      },
+      {
+        path: "/profile",
+        element: <ProfileLayout />,
+        children: [
+          { index: true, element: <Profile /> },
+          { path: "settings", element: <Settings /> },
+          { path: "skills", element: <Skills /> },
+          { path: "experience", element: <Experience /> },
+          { path: "certificates", element: <Certificates /> },
+        ],
       },
     ],
   },
