@@ -44,10 +44,11 @@ const Profile = () => {
       {/* Header */}
       <div className="flex items-center gap-6 mb-8">
         <img
-          src={user.avatar || "/default-avatar.png"}
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRODZob7ROpqlx8WXwjueNwTOlC6Qum-yMiyfXiFRXkdhkHgybCpdvM1UpaXCL1ycfO8NI&usqp=CAU"
           alt="Profile"
-          className="w-20 h-20 rounded-full object-cover border-4 border-indigo-600"
+          className="w-20 h-20 rounded-full object-cover border-2 border-indigo-600"
         />
+
         <div>
           <h1 className="text-2xl font-bold">{user.fullName || "Your Name"}</h1>
           <p className="text-sm text-gray-500 dark:text-slate-400">

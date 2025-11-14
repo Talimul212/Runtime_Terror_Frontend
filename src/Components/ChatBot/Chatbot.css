@@ -1,0 +1,35 @@
+.react-chatbot-kit-chat-container {
+  width: auto;
+}
+.react-chatbot-kit-chat-inner-container {
+  background: #0ca3990c;
+}
+.react-chatbot-kit-chat-header {
+  background: #3949ab;
+  color: #ffffff;
+  text-align: center;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+.react-chatbot-kit-chat-bot-avatar {
+  background-image: url(https://cdn-icons-png.flaticon.com/512/10817/10817417.png);
+  background-size: cover; /* Ensures the image covers the avatar container */
+  background-position: center;
+  width: 10%; /* Adjust based on the actual avatar size */
+  height: 30%;
+}
+
+.react-chatbot-kit-chat-bot-avatar-container {
+  background: none; /* Removes the background color */
+  padding: 0; /* Remove any padding that could add space around the avatar */
+  border: none; /* Remove any border */
+}
+.react-chatbot-kit-chat-bot-message {
+  background: #3949ab;
+  margin-left: 15px;
+}
+.react-chatbot-kit-chat-btn-send {
+  background: #3949ab;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}

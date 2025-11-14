@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
-// Load token from localStorage
+// Load token and user from localStorage
 let user = null;
 try {
   const userData = localStorage.getItem("user");
@@ -12,11 +12,10 @@ try {
 
 const token = localStorage.getItem("token") || null;
 
+// Async Thunks
 export const signupUser = createAsyncThunk(
   "auth/signupUser",
   async (formData, thunkAPI) => {
-    console.log(formData);
-
     try {
       const res = await fetch("http://localhost:5000/api/v1/auth/register", {
         method: "POST",
@@ -50,6 +49,35 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const updateUserProfile = createAsyncThunk(
+  "auth/updateUserProfile",
+  async ({ userId, updatedFields }, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+
+    try {
+      const res = await fetch(
+        `http://localhost:5000/api/v1/auth/profile/${userId}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(updatedFields),
+        }
+      );
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Profile update failed");
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+// Slice
 const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -64,6 +92,10 @@ const authSlice = createSlice({
       state.token = null;
       localStorage.removeItem("token");
       localStorage.removeItem("user");
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
+      localStorage.setItem("user", JSON.stringify(action.payload));
     },
   },
   extraReducers: (builder) => {
@@ -100,32 +132,6 @@ const authSlice = createSlice({
       });
   },
 });
-export const updateUserProfile = createAsyncThunk(
-  "auth/updateUserProfile",
-  async ({ userId, updatedFields }, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const token = state.auth.token;
 
-    try {
-      const res = await fetch(
-        `http://localhost:5000/api/v1/auth/profile/${userId}`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(updatedFields),
-        }
-      );
-
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Profile update failed");
-      return data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
-export const { logout } = authSlice.actions;
+export const { logout, setUser } = authSlice.actions;
 export default authSlice.reducer;
