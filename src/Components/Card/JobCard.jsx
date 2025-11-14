@@ -1,7 +1,12 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const JobCard = ({ job }) => {
+  const navigate = useNavigate();
+
   const {
+    _id, // assuming each job has a unique ID
     title = "Untitled",
     type = "Unknown",
     company = "Unknown",
@@ -31,7 +36,7 @@ const JobCard = ({ job }) => {
 
       <div className="flex flex-wrap gap-2 mb-4">
         {Array.isArray(requiredSkills) && requiredSkills.length > 0 ? (
-          requiredSkills?.map((skill, index) => (
+          requiredSkills.map((skill, index) => (
             <span
               key={index}
               className="text-xs px-2 py-1 bg-slate-100 dark:bg-slate-700 text-gray-800 dark:text-white rounded-md"
@@ -46,9 +51,16 @@ const JobCard = ({ job }) => {
         )}
       </div>
 
-      <p className="text-xs text-gray-400 dark:text-slate-500">
+      <p className="text-xs text-gray-400 dark:text-slate-500 mb-4">
         Posted on {new Date(createdAt).toLocaleDateString()}
       </p>
+
+      <Link
+        to={`/job/${_id}`}
+        className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"
+      >
+        View Details
+      </Link>
     </div>
   );
 };
