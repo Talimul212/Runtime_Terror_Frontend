@@ -19,6 +19,8 @@ import About from "../Pages/About/About";
 import Blog from "../Pages/Blog/Blog";
 import JobDetails from "../Pages/Jobpage/JobDetails";
 import ResourceDetails from "../Pages/ResourcePage/ResourceDetails";
+import CV_Analysis from "../Pages/Porfile/CV_Analysis";
+import SkillGapForm from "../Pages/Porfile/SkillGapForm/SkillGapForm";
 
 export const router = createBrowserRouter([
   {
@@ -74,6 +76,8 @@ export const router = createBrowserRouter([
           { path: "skills", element: <Skills /> },
           { path: "experience", element: <Experience /> },
           { path: "career-interests", element: <CareerInterests /> },
+          { path: "cv-analysis", element: <CV_Analysis /> },
+          { path: "skill-gap", element: <SkillGapForm /> },
         ],
       },
     ],

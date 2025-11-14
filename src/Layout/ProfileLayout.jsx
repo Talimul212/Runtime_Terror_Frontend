@@ -7,6 +7,7 @@ import {
   BriefcaseIcon,
   AcademicCapIcon,
   HeartIcon,
+  ChartBarIcon,
 } from "@heroicons/react/24/outline";
 
 const menuItems = [
@@ -15,14 +16,19 @@ const menuItems = [
   { name: "Skills", path: "/profile/skills", icon: LightBulbIcon },
   { name: "Experience", path: "/profile/experience", icon: BriefcaseIcon },
   {
-    name: "Certificates",
-    path: "/profile/certificates",
+    name: "CV Analysis",
+    path: "/profile/cv-analysis",
     icon: AcademicCapIcon,
   },
   {
     name: "Career Interests",
     path: "/profile/career-interests",
     icon: HeartIcon,
+  },
+  {
+    name: "Skill Gap Identifier",
+    path: "/profile/skill-gap",
+    icon: ChartBarIcon,
   },
 ];
 
