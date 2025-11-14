@@ -35,40 +35,58 @@ const SkillGapForm = () => {
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-white dark:bg-slate-900 rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-4 text-indigo-600">
+      <h2 className="text-2xl font-bold mb-6 text-indigo-600">
         🔍 Skill Gap Analyzer
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Skills Input */}
+        <div className="relative">
+          <label
+            htmlFor="skills"
+            className="block text-sm font-medium text-gray-700 dark:text-white mb-1"
+          >
             Your Current Skills
           </label>
           <textarea
+            id="skills"
             placeholder="e.g. React, Node.js, SQL"
             value={skills}
             onChange={(e) => setSkills(e.target.value)}
             rows={4}
-            className="w-full p-3 border rounded-md dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+            className="peer w-full p-3 border border-gray-300 dark:border-slate-700 rounded-md bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
             required
           />
+          <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
+            List your technical and soft skills, separated by commas.
+          </p>
         </div>
 
-        <div>
-          <label className="block text-sm font-medium text-gray-700 dark:text-white mb-1">
+        {/* Job Role Selector */}
+        <div className="relative">
+          <label
+            htmlFor="job"
+            className="block text-sm font-medium text-gray-700 dark:text-white mb-1"
+          >
             Target Job Role
           </label>
           <select
+            id="job"
             value={job}
             onChange={(e) => setJob(e.target.value)}
-            className="w-full p-3 border rounded-md dark:border-slate-700 dark:bg-slate-800 dark:text-white"
+            className="w-full p-3 border border-gray-300 dark:border-slate-700 rounded-md bg-white dark:bg-slate-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           >
             <option value="Data Analyst">Data Analyst</option>
             <option value="Frontend Developer">Frontend Developer</option>
             <option value="Backend Developer">Backend Developer</option>
             <option value="Graphic Designer">Graphic Designer</option>
           </select>
+          <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">
+            Choose the role you’re aiming for.
+          </p>
         </div>
 
+        {/* Submit Button */}
         <button
           type="submit"
           disabled={loading}
@@ -82,6 +100,7 @@ const SkillGapForm = () => {
         </button>
       </form>
 
+      {/* Result Display */}
       {result && (
         <div className="mt-6 p-4 border-l-4 border-green-500 bg-green-50 dark:bg-slate-800 rounded-md">
           <h3 className="text-lg font-semibold text-green-700 dark:text-green-400 mb-2">
