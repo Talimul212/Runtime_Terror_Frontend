@@ -17,6 +17,8 @@ import PrivateRoute from "./PrivateRoute";
 import CareerInterests from "../Pages/Porfile/CareerInterests";
 import About from "../Pages/About/About";
 import Blog from "../Pages/Blog/Blog";
+import JobDetails from "../Pages/Jobpage/JobDetails";
+import ResourceDetails from "../Pages/ResourcePage/ResourceDetails";
 
 export const router = createBrowserRouter([
   {
@@ -32,8 +34,16 @@ export const router = createBrowserRouter([
         element: <AllJobs />,
       },
       {
+        path: "/job/:id",
+        element: <JobDetails />,
+      },
+      {
         path: "/resources",
         element: <AllResource />,
+      },
+      {
+        path: "/resource/:id",
+        element: <ResourceDetails />,
       },
       {
         path: "/about",
