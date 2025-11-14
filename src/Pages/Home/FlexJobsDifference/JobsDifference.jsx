@@ -1,5 +1,6 @@
 import React from "react";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
+import { Link } from "react-router-dom"; // <-- ADD THIS
 
 const benefits = [
   {
@@ -32,6 +33,7 @@ const JobsDifference = () => {
             </span>{" "}
             is Different
           </h2>
+
           <div className="space-y-6">
             {benefits.map((item, index) => (
               <div key={index} className="flex items-start gap-4">
@@ -47,15 +49,19 @@ const JobsDifference = () => {
               </div>
             ))}
           </div>
-          <button className="mt-8 bg-orange-500 text-white px-6 py-3 rounded-md font-semibold hover:bg-orange-600 transition">
-            Get Started
-          </button>
+
+          {/* Updated Button */}
+          <Link to="/blog">
+            <button className="mt-8 bg-indigo-500 text-white px-10 py-4 rounded-md font-semibold hover:bg-orange-600 transition">
+              Explore Articles
+            </button>
+          </Link>
         </div>
 
-        {/* Right: Optional Image */}
+        {/* Right: Image */}
         <div className="flex justify-center">
           <img
-            src="https://assets.flexjobs.com/blobcontent/flexjobs/images/how-different.png" // Replace with actual image path
+            src="https://assets.flexjobs.com/blobcontent/flexjobs/images/how-different.png"
             alt="Remote worker"
             className="w-96 h-auto"
           />
