@@ -5,176 +5,82 @@ import { useSelector } from "react-redux";
 const ResourceDetails = () => {
   const { id } = useParams();
   const { resources, loading, error } = useSelector((state) => state.resources);
+  const { user } = useSelector((state) => state.auth);
   const [showModal, setShowModal] = useState(false);
 
   const resource = resources?.find((item) => item._id === id);
 
-  if (loading) return <div className="p-6">Loading resource details...</div>;
-  if (error) return <div className="p-6 text-red-500">Error: {error}</div>;
-  if (!resource)
-    return <div className="p-6 text-red-500">Resource not found.</div>;
+  if (loading) return <div className="p-6 text-center text-gray-500">Loading resource details...</div>;
+  if (error) return <div className="p-6 text-center text-red-500">Error: {error}</div>;
+  if (!resource) return <div className="p-6 text-center text-red-500">Resource not found.</div>;
 
-  const {
-    title,
-    type,
-    provider,
-    category,
-    description,
-    tags = [],
-    updatedAt,
-    relatedSkills = [],
-    format = "PDF",
-    accessLevel = "Free",
-    estimatedTime = "30 min",
-    outcomes = [
-      "Understand core concepts",
-      "Apply techniques in real projects",
-      "Improve job readiness",
-    ],
-    tips = "Use this resource alongside hands-on practice for best results.",
-  } = resource;
+  const { title, type, provider, category, description } = resource;
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-6">
-      {/* Title & Meta */}
-      <h1 className="text-3xl font-bold text-indigo-600 mb-4">{title}</h1>
-      <p className="text-sm text-gray-600 dark:text-slate-400 mb-2">
-        {provider} · {category} · {type}
-      </p>
-      <p className="text-sm text-gray-700 dark:text-slate-300 mb-6">
-        Updated on {new Date(updatedAt).toLocaleDateString()}
-      </p>
+    <div className="max-w-5xl mx-auto py-12 px-6 space-y-12">
+      {/* Header */}
+      <div className="space-y-3">
+        <h1 className="text-5xl font-extrabold text-indigo-600 tracking-wide">{title}</h1>
+        <p className="text-sm text-gray-500 dark:text-slate-400">
+          {provider} · {category} · <span className="capitalize">{type}</span>
+        </p>
+      </div>
 
       {/* Description */}
-      <p className="text-base text-gray-800 dark:text-white mb-6 leading-relaxed">
-        {description}
-      </p>
-
-      {/* Highlights */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        <div className="bg-slate-100 dark:bg-slate-700 p-4 rounded text-sm text-gray-800 dark:text-white">
-          <strong>Format:</strong> {format}
-        </div>
-        <div className="bg-slate-100 dark:bg-slate-700 p-4 rounded text-sm text-gray-800 dark:text-white">
-          <strong>Access:</strong> {accessLevel}
-        </div>
-        <div className="bg-slate-100 dark:bg-slate-700 p-4 rounded text-sm text-gray-800 dark:text-white">
-          <strong>Estimated Time:</strong> {estimatedTime}
-        </div>
-      </div>
-
-      {/* Related Skills */}
-      {relatedSkills.length > 0 && (
-        <>
-          <h3 className="text-lg font-semibold mb-2">Related Skills</h3>
-          <div className="flex flex-wrap gap-2 mb-6">
-            {relatedSkills.map((skill, index) => (
-              <span
-                key={index}
-                className="text-sm px-3 py-1 bg-indigo-100 dark:bg-indigo-900 text-indigo-700 dark:text-indigo-300 rounded-full"
-              >
-                {skill}
-              </span>
-            ))}
-          </div>
-        </>
-      )}
-
-      {/* Tags */}
-      <h3 className="text-lg font-semibold mb-2">Tags</h3>
-      <div className="flex flex-wrap gap-2 mb-6">
-        {tags.length > 0 ? (
-          tags.map((tag, index) => (
-            <span
-              key={index}
-              className="text-sm px-3 py-1 bg-slate-100 dark:bg-slate-700 text-gray-800 dark:text-white rounded-full"
-            >
-              {tag}
-            </span>
-          ))
-        ) : (
-          <span className="text-sm text-gray-400 dark:text-slate-500">
-            No tags listed
-          </span>
-        )}
-      </div>
-
-      {/* Learning Outcomes */}
-      <h3 className="text-lg font-semibold mb-2">What You'll Learn</h3>
-      <ul className="list-disc list-inside text-sm text-gray-700 dark:text-slate-300 mb-6">
-        {outcomes.map((item, index) => (
-          <li key={index}>{item}</li>
-        ))}
-      </ul>
-
-      {/* Tips */}
-      <div className="bg-yellow-50 dark:bg-yellow-900 p-4 rounded mb-8 text-sm text-yellow-800 dark:text-yellow-200">
-        <strong>Tip:</strong> {tips}
-      </div>
+      <p className="text-gray-800 dark:text-gray-200 leading-relaxed text-lg">{description}</p>
 
       {/* Request Access Button */}
-      <button
-        onClick={() => setShowModal(true)}
-        className="bg-indigo-600 text-white px-6 py-2 rounded hover:bg-indigo-700 transition"
-      >
-        Request Access
-      </button>
+      <div className="text-center">
+        <button
+          onClick={() => setShowModal(true)}
+          className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-10 py-3 rounded-full font-semibold shadow-xl hover:scale-105 transform transition-all duration-300"
+        >
+          Request Access
+        </button>
+      </div>
 
-      {/* Modal */}
+      {/* Popup Modal */}
       {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-lg w-full max-w-lg">
-            <h2 className="text-xl font-bold mb-4 text-indigo-600">
-              Access Request Form
-            </h2>
+        <div className="fixed inset-0 bg-black bg-opacity-40 backdrop-blur-sm flex justify-center items-center z-50 p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl w-full max-w-lg p-8 relative transform scale-95 animate-scaleUp transition-transform">
+            {/* Close button */}
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600 dark:text-gray-300 dark:hover:text-white text-xl"
+            >
+              ✕
+            </button>
 
-            <form className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Your Name
-                </label>
-                <input
-                  type="text"
-                  className="w-full p-2 border rounded dark:bg-slate-700 dark:text-white"
-                  placeholder="Full name"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  className="w-full p-2 border rounded dark:bg-slate-700 dark:text-white"
-                  placeholder="you@example.com"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1">
-                  Purpose of Access
-                </label>
-                <textarea
-                  rows="4"
-                  className="w-full p-2 border rounded dark:bg-slate-700 dark:text-white"
-                  placeholder="Explain why you need this resource..."
-                ></textarea>
-              </div>
-              <div className="flex justify-end gap-2 mt-4">
-                <button
-                  type="button"
-                  onClick={() => setShowModal(false)}
-                  className="px-4 py-2 bg-gray-300 dark:bg-slate-600 rounded hover:bg-gray-400 dark:hover:bg-slate-500"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="submit"
-                  className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
-                >
-                  Submit Request
-                </button>
-              </div>
-            </form>
+            <h2 className="text-3xl font-bold mb-6 text-indigo-600">Request Access</h2>
+
+            {/* User Details */}
+            <div className="mb-6 p-4 bg-gray-50 dark:bg-slate-800 rounded-xl shadow-inner">
+              <h3 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">Your Details</h3>
+              <p className="mb-1"><strong>Name:</strong> {user?.name || user?.fullName || "N/A"}</p>
+              <p className="mb-1"><strong>Email:</strong> {user?.email || "N/A"}</p>
+              {user?.skills && user.skills.length > 0 && (
+                <p><strong>Skills:</strong> {user.skills.join(", ")}</p>
+              )}
+            </div>
+
+            {/* Resource Details */}
+            <div className="mb-6 p-4 bg-gray-50 dark:bg-slate-800 rounded-xl shadow-inner">
+              <h3 className="font-semibold text-gray-700 dark:text-gray-300 mb-2">Resource Details</h3>
+              <p className="mb-1"><strong>Title:</strong> {title}</p>
+              <p className="mb-1"><strong>Type:</strong> {type}</p>
+              <p className="mb-1"><strong>Provider:</strong> {provider}</p>
+              <p className="mb-1"><strong>Category:</strong> {category}</p>
+            </div>
+
+            {/* Submit Button */}
+            <div className="flex justify-end">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-8 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 text-white rounded-xl hover:scale-105 transform transition-all duration-300 font-medium shadow-lg"
+              >
+                Submit Request
+              </button>
+            </div>
           </div>
         </div>
       )}
